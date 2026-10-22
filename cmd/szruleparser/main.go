@@ -28,7 +28,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/sentinez/core/modsec/ruleparser"
+	"github.com/sentinez/core/szmodsec/ruleparser"
 	rulepb "github.com/sentinez/sentinez/api/proto/sentinez/types/coreruleset/v1"
 	templatez "github.com/sentinez/tools/internal/template"
 	"golang.org/x/text/cases"
