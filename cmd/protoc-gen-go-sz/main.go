@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/sentinez/tools/internal/senz"
+	"github.com/sentinez/tools/internal/sz"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/types/pluginpb"
 )
@@ -30,10 +30,10 @@ func main() {
 				continue
 			}
 
-			if err := senz.CheckAuditOwners(f); err != nil {
+			if err := sz.CheckAuditOwners(f); err != nil {
 				return err
 			}
-			_ = senz.GenerateSentinezOptionFile(gen, f)
+			_ = sz.GenerateSentinezOptionFile(gen, f)
 		}
 		return nil
 	})

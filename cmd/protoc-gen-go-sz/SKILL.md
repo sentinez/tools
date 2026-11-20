@@ -1,16 +1,16 @@
 ---
-name: protoc-gen-go-senz
+name: protoc-gen-go-sz
 version: 0.2.0
 description: A protoc plugin that generates Go helpers for Sentinez services, including metadata accessors and field name constants.
 ---
 
-# protoc-gen-go-senz
+# protoc-gen-go-sz
 
-`protoc-gen-go-senz` is a custom Protocol Buffers plugin for Go, designed to generate helper code for Sentinéz applications. It works alongside `protoc-gen-go` to provide additional type safety and metadata accessors.
+`protoc-gen-go-sz` is a custom Protocol Buffers plugin for Go, designed to generate helper code for Sentinéz applications. It works alongside `protoc-gen-go` to provide additional type safety and metadata accessors.
 
 
 ## Style
-Read `hack/.agent/skills/go-style-guide/SKILL.md` (Uber-based; 80 columns, 35-line functions) before changing the plugin. The generator logic lives in `tools/internal/senz/senz.go`; `main.go` only wires it to `protogen`.
+Read `hack/.agent/skills/go-style-guide/SKILL.md` (Uber-based; 80 columns, 35-line functions) before changing the plugin. The generator logic lives in `tools/internal/sz/sz.go`; `main.go` only wires it to `protogen`.
 
 ## Features
 
@@ -105,13 +105,13 @@ const (
 
 ## Usage
 
-Install the plugin so `protoc-gen-go-senz` is on `PATH` (`cd staging/src/github.com/sentinez/tools && go install ./cmd/protoc-gen-go-senz`), then use it as a standard `protoc` plugin. Each `api/proto/sentinez/**/v1/generate.sh` already does this:
+Install the plugin so `protoc-gen-go-sz` is on `PATH` (`cd staging/src/github.com/sentinez/tools && go install ./cmd/protoc-gen-go-sz`), then use it as a standard `protoc` plugin. Each `api/proto/sentinez/**/v1/generate.sh` already does this:
 
 ```bash
-protoc --go-senz_out="$SENTINEZ_GEN_OUT" "$(pwd)"/*.proto
+protoc --go-sz_out="$SENTINEZ_GEN_OUT" "$(pwd)"/*.proto
 ```
 
-It creates `<file>_senz.pb.go` next to the other generated files (e.g. `api/proto/sentinez/apps/iam/v1/iam_senz.pb.go`). Never edit it by hand. Generated files import `typepb "github.com/sentinez/sentinez/api/proto/sentinez/types/v1"`, which defines `XMeta`, `XMessage`, `XField`, `XMethod`, `Zone` and `ControlPlane` (`types/v1/options.proto`, `known.proto`).
+It creates `<file>_sz.pb.go` next to the other generated files (e.g. `api/proto/sentinez/apps/iam/v1/iam_sz.pb.go`). Never edit it by hand. Generated files import `typepb "github.com/sentinez/sentinez/api/proto/sentinez/types/v1"`, which defines `XMeta`, `XMessage`, `XField`, `XMethod`, `Zone` and `ControlPlane` (`types/v1/options.proto`, `known.proto`).
 
 ### 5. Method Metadata Accessors
 For methods annotated with `(sentinez.types.v1.x_method)`, the plugin generates a function returning the method metadata.
@@ -144,4 +144,4 @@ func GetGreeterServiceSayHello() *typepb.XMethod {
 
 ## Testing
 
-Run `cd staging/src/github.com/sentinez/tools && go test ./...`. `tools/example/` holds a sample proto with its `_senz.pb.go` output (`example/build.sh` regenerates it); after changing the generator, regenerate it and the affected `api` protos (`cd api && buf generate` or the directory's `generate.sh`) and check that `go build ./...` still passes in the root and `api` modules.
+Run `cd staging/src/github.com/sentinez/tools && go test ./...`. `tools/example/` holds a sample proto with its `_sz.pb.go` output (`example/build.sh` regenerates it); after changing the generator, regenerate it and the affected `api` protos (`cd api && buf generate` or the directory's `generate.sh`) and check that `go build ./...` still passes in the root and `api` modules.
